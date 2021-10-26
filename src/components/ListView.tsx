@@ -17,17 +17,21 @@ const ListView: FC<ListViewProps> = ({
   description,
 }) => {
   return (
-    <Container testID="contact-item">
-      <Title>{name}</Title>
-      <DateTxt>{restructureDate(releaseDate)}</DateTxt>
+    <Container testID="med-item">
+      <Title testID="item-title">{name}</Title>
+      <DateTxt testID="item-release-date">
+        {restructureDate(releaseDate)}
+      </DateTxt>
       <Hint>Diseases</Hint>
       <Row>
         {relatedDiseases.map((disease, index) => (
-          <DiseaseTxt key={index}>{disease}, </DiseaseTxt>
+          <DiseaseTxt testID="item-disease" key={index}>
+            {disease},{' '}
+          </DiseaseTxt>
         ))}
       </Row>
       <Hint>Description</Hint>
-      <DiscribeTxt>{description}</DiscribeTxt>
+      <DiscribeTxt testID="item-description">{description}</DiscribeTxt>
     </Container>
   );
 };

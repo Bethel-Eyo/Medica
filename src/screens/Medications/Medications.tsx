@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import styled from 'styled-components/native';
+import InputField from '../../components/InputField';
 import ListView from '../../components/ListView';
 import {background, primary} from '../../config/color';
 import {Medication} from '../../config/interfaces';
@@ -8,13 +9,26 @@ import {MedicationsLogic} from './MedicationsLogic';
 interface MedicationsProps {}
 
 const Medications: FC<MedicationsProps> = () => {
-  const {drugs} = MedicationsLogic();
+  const {drugs, searchTxt, setSearchTxt} = MedicationsLogic();
   return (
     <Container testID="root">
       <HomeHeader>
         <Logo testID="logo" source={require('../../assets/logo.png')} />
         <Title>Medica</Title>
       </HomeHeader>
+      <FullWidth>
+        <SearchTxt>Search</SearchTxt>
+      </FullWidth>
+      <InputField
+        placeholder="Search by drug name or by disease"
+        value={searchTxt}
+        onChangeText={(text: string) => {
+          setSearchTxt(text);
+        }}
+      />
+      <FullWidth>
+        <Tip>Showing {drugs?.length} results</Tip>
+      </FullWidth>
       <MedList<any>
         data={drugs}
         testID="med-list"
@@ -57,6 +71,10 @@ const HomeHeader = styled.View`
   border-bottom: 5px solid red;
 `;
 
+const FullWidth = styled.View`
+  width: 100%;
+`;
+
 const Logo = styled.Image`
   height: 100px;
   width: 100px;
@@ -69,4 +87,20 @@ const Title = styled.Text`
   font-size: 24px;
   margin-top: 2%;
   color: ${background.main};
+`;
+
+const SearchTxt = styled.Text`
+  color: ${primary.text};
+  font-size: 18px;
+  margin-left: 7%;
+  font-weight: 500;
+  margin-top: 15px;
+`;
+
+const Tip = styled.Text`
+  color: ${primary.text};
+  font-size: 14px;
+  margin-left: 7%;
+  font-weight: 500;
+  margin-top: 15px;
 `;
